@@ -2,7 +2,7 @@
 ##### **By Chris Wong**
 -----
 ### <ins> **Requirement Definition** <ins>
-The code enables the users to find information on ___ through the systems code.
+The code enables the users to find information on different type of pokemons through the systems code.
 
 ---
 ### <ins> **Functional Requirements** <ins>
@@ -11,7 +11,7 @@ The user will need to download the required datapacks for the code.\
 **User Interface: What is required for the user to interact with the system?**\
 The user will need to be able to open up terminal and type in required functions into it.\
 **Data Display: What information does the user need to obtain from the system?**\
-The user obtains ___ from the system
+The user obtains pokemon  from the system
 
 ---
 ### <ins> **Non-Functional Requirements** <ins>
@@ -61,10 +61,21 @@ We need instructions for the commands that will need to be inputed into the term
 #### <ins> Useability / Accessibility <ins>
 
 - How might you make your application more accessible? What could you do with the User Interface to improve usability?
-    - D
+    - The accessibility can improve by adding functions that allow people who have disabilities to use it.
 
 ####  <ins> Reliability <ins>
 
 - What could perhaps not crash the whole system, but could be an issue and needs to be addressed? Data integrity? Duplicate data? API retrieval crash?
-----------------------
+    - Duplicate of data could be a problem if it is called and changes the format to make the users harder to use
+---
+## **Use Cases**\
+Actor: User ()\
+Preconditions: API avaliable, Installed requirements\
+Main Flow:
+1. **Search for ___**: User enters ___
+2. **Data Retrival**: Data that user wants is shown on their screen from being retrieved
+
+Postconditions: 
+
+---
 # <ins> **Development** <ins>
