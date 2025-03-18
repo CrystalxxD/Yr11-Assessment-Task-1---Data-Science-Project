@@ -2,7 +2,7 @@
 ##### **By Chris Wong**
 -----
 ### <ins> **Requirement Definition** <ins>
-The code enables the users to find information on pokemon through the systems code.
+The code enables the users to find information on pokemon abilities, types and much more. It can also find the highest health, weight or agility of a pokemon and all this is completed through the systems code and api.
 
 ---
 ### <ins> **Functional Requirements** <ins>
@@ -72,16 +72,27 @@ We need instructions for the commands that will need to be inputed into the term
 - What could perhaps not crash the whole system, but could be an issue and needs to be addressed? Data integrity? Duplicate data? API retrieval crash?
     - Problams that could occur includes the user typing in the wrong name and it could be fixed by giving suggestions of names that are similiar to what the user has typed.
 ---
-## **Use Cases**\
-Actor: User ()\
+## **Use Cases**
+Actor: User (Pokemon Fanatic)\
 Preconditions: API avaliable, Installed requirements\
 Main Flow:
-1. **Search for ___**: User enters ___
+1. **Search for Pokemon**: User enters what they want to find such as a pokemon name
 2. **Data Retrival**: Data that user wants is shown on their screen from being retrieved
 
 Postconditions: 
 
 ---
----
 # <ins> **Development** <ins>
+---
+### Gnatt Chart
+![Gnatt Chart](image/GnattChart.png)
+---
+### Structure Chart
+
+---
+### Flow Chart
+
+### Pseudocode
+---
+### Data Dictionary
 
