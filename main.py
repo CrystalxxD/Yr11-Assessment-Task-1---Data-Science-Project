@@ -108,7 +108,7 @@ def extract_evolution_chain(chain):
 # Load Pokemon names once
 pokemon_list = fetch_all_pokemon()
 
-# Input loop
+#loop
 while True:
     pokemon_name = input("\nEnter Pokemon name (or type 'exit' to quit): ").strip()
     
