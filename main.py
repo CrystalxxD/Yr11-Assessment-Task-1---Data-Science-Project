@@ -1,9 +1,11 @@
 import requests
 import difflib
+import random
 
 BASE_URL = "https://pokeapi.co/api/v2/"
 
 def fetch_all_pokemon():
+    #Fetches a list of all Pokemon names for error handling.
     url = f"{BASE_URL}pokemon?limit=10000"  # Get all Pokemon
     response = requests.get(url)
     
@@ -45,8 +47,9 @@ def get_pokemon_data(pokemon_name):
     # Held Items
     held_items = [item["item"]["name"].capitalize() for item in data["held_items"]]
 
-    # Moves (Fetching limited moves for brevity)
-    moves = [m["move"]["name"].capitalize() for m in data["moves"][:10]]
+    # Moves (Randomly pick 10)
+    all_moves = [m["move"]["name"].capitalize() for m in data["moves"]]
+    moves = random.sample(all_moves, min(10, len(all_moves)))  # Pick up to 10 moves
 
     # Evolution Chain
     evolution_chain = get_evolution_chain(data["species"]["url"])
@@ -67,7 +70,7 @@ def get_pokemon_data(pokemon_name):
     print("\n=== Held Items ===")
     print(", ".join(held_items) if held_items else "None")
 
-    print("\n=== Moves (First 10) ===")
+    print("\n=== Moves (10 Random Moves) ===")
     print(", ".join(moves) if moves else "None")
 
     print("\n=== Evolution Chain ===")
@@ -92,7 +95,7 @@ def get_evolution_chain(species_url):
     return extract_evolution_chain(evolution_data["chain"])
 
 def extract_evolution_chain(chain):
-    #Pokemon names from evolution chain data.
+    #Extracts Pokemon names from evolution chain data.
     evolution_chain = []
     while chain:
         evolution_chain.append(chain["species"]["name"].capitalize())
