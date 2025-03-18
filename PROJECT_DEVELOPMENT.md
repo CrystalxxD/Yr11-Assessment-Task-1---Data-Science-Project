@@ -2,23 +2,27 @@
 ##### **By Chris Wong**
 -----
 ### <ins> **Requirement Definition** <ins>
-The code enables the users to find information on different type of pokemons through the systems code.
+The code enables the users to find information on pokemon through the systems code.
 
 ---
 ### <ins> **Functional Requirements** <ins>
 **Data Retrieval: What does the user need to be able to view in the system?**\
-The user will need to download the required datapacks for the code.\
+The user will need to download the required datapacks for the code.
+
 **User Interface: What is required for the user to interact with the system?**\
-The user will need to be able to open up terminal and type in required functions into it.\
+The user will need to be able to open up terminal and type in required functions into it.
+
 **Data Display: What information does the user need to obtain from the system?**\
-The user obtains pokemon  from the system
+The user obtains information on pokemon types, abilities, sound and stas from the system
 
 ---
 ### <ins> **Non-Functional Requirements** <ins>
 **Data Retrieval: What does the user need to be able to view in the system?**\
-The user will need to view the termanal that allows them to find out what they want to know in the system\
+The user will need to view the termanal that allows them to find out what they want to know in the system
+
 **Reliability: How reliable does the system and data need to be?**\
-The system needs to be relaiable and up to date\
+The system needs to be relaiable and up to date
+
 **Usability and Accessibility: How easy to navigate does the system need to be? What instructions will we need for users to access the system?**\
 We need instructions for the commands that will need to be inputed into the terminal
 
@@ -28,7 +32,7 @@ We need instructions for the commands that will need to be inputed into the term
 #### <ins> User Requirements <ins>
 
 - What does the user need to be able to do? List all specifications here.
-    - The user will need to be literate and know how to type. They will also have to know about ____
+    - The user will need to be literate and know how to type. They will also have to know about pokemon names so they can use the system.
 
 #### <ins> Inputs & Outputs <ins>
 
@@ -61,12 +65,12 @@ We need instructions for the commands that will need to be inputed into the term
 #### <ins> Useability / Accessibility <ins>
 
 - How might you make your application more accessible? What could you do with the User Interface to improve usability?
-    - The accessibility can improve by adding functions that allow people who have disabilities to use it.
+    - The layout of the could be more easy to read so that people can use it better
 
 ####  <ins> Reliability <ins>
 
 - What could perhaps not crash the whole system, but could be an issue and needs to be addressed? Data integrity? Duplicate data? API retrieval crash?
-    - Duplicate of data could be a problem if it is called and changes the format to make the users harder to use
+    - Problams that could occur includes the user typing in the wrong name and it could be fixed by giving suggestions of names that are similiar to what the user has typed.
 ---
 ## **Use Cases**\
 Actor: User ()\
@@ -78,4 +82,6 @@ Main Flow:
 Postconditions: 
 
 ---
+---
 # <ins> **Development** <ins>
+
