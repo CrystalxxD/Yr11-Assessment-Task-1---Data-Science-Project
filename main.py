@@ -2,7 +2,7 @@ import requests
 import difflib
 import random
 
-BASE_URL = "https://pokeapi.co/api/v2/"
+BASE_URL = "https://pokeapi.co/api/v2/pokemon/"
 
 def fetch_all_pokemon():
     #Fetches a list of all Pokemon names for error handling.
