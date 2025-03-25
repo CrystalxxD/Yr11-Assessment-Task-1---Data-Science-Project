@@ -1,9 +1,11 @@
 import requests
 import difflib
 import random
-
+import json
+import os
 
 BASE_URL = "https://pokeapi.co/api/v2/"
+SEARCH_HISTORY_FILE = "searched_pokemon.json"
 
 def fetch_all_pokemon():
     #Fetches a list of all Pokemon names for error handling.
@@ -106,22 +108,108 @@ def extract_evolution_chain(chain):
             break
     return evolution_chain
 
+# Function to load Pokémon search history
+def load_search_history():
+    if os.path.exists(SEARCH_HISTORY_FILE):
+        with open(SEARCH_HISTORY_FILE, "r") as file:
+            return json.load(file)
+    return []
+
+# Function to save searched Pokémon names
+def save_search_history(pokemon_name):
+    history = load_search_history()
+    if pokemon_name.lower() not in history:
+        history.append(pokemon_name.lower())
+        with open(SEARCH_HISTORY_FILE, "w") as file:
+            json.dump(history, file, indent=4)
+
+# Function to find Pokémon with the highest or lowest stats
+def find_pokemon_by_stat(stat_name, top_n, highest=True):
+    url = f"{BASE_URL}pokemon?limit=1000"
+    response = requests.get(url)
+    
+    if response.status_code != 200:
+        print("Failed to fetch Pokémon list.")
+        return
+
+    all_pokemon = response.json()["results"]
+    stat_list = []
+
+    print(f"\nFetching data for {len(all_pokemon)} Pokémon... This might take a while.")
+
+    for pokemon in all_pokemon:
+        response = requests.get(pokemon["url"])
+        if response.status_code == 200:
+            data = response.json()
+            stats = {s["stat"]["name"].capitalize(): s["base_stat"] for s in data["stats"]}
+            if stat_name in stats:
+                stat_list.append((data["name"].capitalize(), stats[stat_name]))
+
+    # Sorting results
+    stat_list = sorted(stat_list, key=lambda x: x[1], reverse=highest)
+    
+    print(f"\nTop {top_n} Pokémon for {stat_name} ({'Highest' if highest else 'Lowest'}):")
+    for i, (name, value) in enumerate(stat_list[:top_n], 1):
+        print(f"{i}. {name} - {value} {stat_name}")
+
+
 # Load Pokemon names once
 pokemon_list = fetch_all_pokemon()
 
 #loop
 while True:
-    pokemon_name = input("\nEnter Pokemon name (or type 'exit' to quit): ").strip()
-    
-    if pokemon_name.lower() == "exit":
-        print("Thank You for using Pokemon Info Finder")
+    print("\nWhat would you like to do?")
+    print("1. Search for a Pokémon")
+    print("2. Find Pokémon with the highest or lowest stats")
+    print("3. View search history")
+    print("4. Exit")
+
+    choice = input("Enter your choice (1/2/3/4): ").strip()
+
+    if choice == "1":
+        pokemon_name = input("\nEnter Pokémon name: ").strip()
+        
+        if pokemon_name.lower() in pokemon_list:
+            get_pokemon_data(pokemon_name)
+            save_search_history(pokemon_name)
+        else:
+            suggestions = suggest_pokemon_name(pokemon_name, pokemon_list)
+            if suggestions:
+                print(f"\nPokémon not found! Did you mean: {', '.join(suggestions)}?")
+            else:
+                print("\nPokémon not found, and no similar names were found.")
+
+    elif choice == "2":
+        valid_stats = ["HP", "Attack", "Defense", "Special-attack", "Special-defense", "Speed"]
+        print("\nAvailable stats to search for:")
+        print(", ".join(valid_stats))
+        
+        stat_name = input("Enter a stat (case-sensitive): ").strip()
+        if stat_name not in valid_stats:
+            print("\nInvalid stat! Please enter one from the list.")
+            continue
+
+        top_n = input("Enter how many top Pokémon to display: ").strip()
+        if not top_n.isdigit() or int(top_n) <= 0:
+            print("\nInvalid number! Please enter a positive integer.")
+            continue
+
+        order = input("Find highest or lowest? (h/l): ").strip().lower()
+        highest = order == "h"
+
+        find_pokemon_by_stat(stat_name, int(top_n), highest)
+
+    elif choice == "3":
+        history = load_search_history()
+        if history:
+            print("\n=== Search History ===")
+            print(", ".join(history))
+        else:
+            print("\nNo Pokémon have been searched yet.")
+
+    elif choice == "4":
+        print("Thank You For Using Pokemon Info Finder")
         break
 
-    if pokemon_name.lower() in pokemon_list:
-        get_pokemon_data(pokemon_name)
     else:
-        suggestions = suggest_pokemon_name(pokemon_name, pokemon_list)
-        if suggestions:
-            print(f"\nPokemon not found! Did you mean: {', '.join(suggestions)}?")
-        else:
-            print("\nPokemon not found, and no similar names were found.")
+        print("\nInvalid choice. Please select a valid option.")
