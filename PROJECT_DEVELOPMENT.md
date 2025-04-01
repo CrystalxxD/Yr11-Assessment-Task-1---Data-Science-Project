@@ -76,23 +76,159 @@ We need instructions for the commands that will need to be inputed into the term
 Actor: User (Pokemon Fanatic)\
 Preconditions: API avaliable, Installed requirements\
 Main Flow:
-1. **Search for Pokemon**: User enters what they want to find such as a pokemon name
-2. **Data Retrival**: Data that user wants is shown on their screen from being retrieved
+1. **User Choice**: User enters 1, 2, 3, 4 or 5 to decide what way do they want the info to be or end the program
+2. **Pokemon Choice**: User chooses what pokemon they want to see and system collects data and stores pokemon nameinto history
+3. **Search Pokemon By Stat**: User chooses what stat they and to see, how many pokemon and from highest or from lowest stat, system collects and shows data
+4. **View Search History**: User gets all pokemon they have searched before.
+5. **Delete Search History**: System Deletes file if user chooses to.
 
-Postconditions: 
+Postconditions: Retrieval of pokemon data, pokemon, history and the removal of history is succcessful.
 
 ---
 # <ins> **Development** <ins>
 ---
 ### Gnatt Chart
-![Gnatt Chart](image/GnattChart.png)
+![alt text](image/GnattChart.png)
 ---
 ### Structure Chart
+![alt text](<image/Structure Chart.png>)
+---
+### Flow Chart: main()
+![alt text](<image/Main() Flowchart.png>)
+### Pseudocode
+
+BEGIN main():    
+
+    choice = 5
+    WHILE choice is not 5
+        DISPLAY menu options
+        INPUT choice
+
+        IF choice is 1 THEN
+            GET Pokemon name
+            IF Pokemon exists:
+                FETCH and DISPLAY Pokemon data
+                SAVE to search history
+            ELSE:
+                SUGGEST similar Pokemon names
+            ENDIF
+
+        ELSEIF choice is 2 THEN
+            DISPLAY available stats
+            GET stat and number of Pokemon to display
+            VALIDATE input
+            FIND and DISPLAY top Pokemon by stat
+
+        ELSEIF choice is 3 THEN
+            LOAD and DISPLAY search history
+
+        ELSEIF choice is 4 THEN
+            CLEAR search history
+
+        ELSE:
+            DISPLAY 'Invalid choice. Please select a valid option.'
+        ENDIF
+    END WHILE
+END main()
+---
+### Flow Chart: get_pokemon()
+![alt text](<image/get_pokemon() Flowchart.png>)
+### Pseudocode
+BEGIN get_pokemon()
+
+INPUT pokemon_name
+
+GET pokemon_id, pokemon_height, pokemon_weight, pokemon_type, pokemon_ability, pokemon_stat, pokemon_held_items, pokemon_moves, pokemon_evolution_chain
+
+DISPLAY:
+
+ === Pokemon Information ===
+        
+        ID: ##
+        Name: pokemon_name
+        Height: #
+        Weight: ##
+        Types: ####
+        Abilities: ####, ####
+        === Base Stats ===
+        Hp: ##
+        Attack: ##
+        Defense: ##
+        Special-attack: ##
+        Special-defense: ##
+        Speed: ##
+        === Held Items ===
+        ####, #
+        === Moves (10 Random Moves) ===
+        ###, ###, ###, ###, ###, ###, ###, ###, ###, ###       
+        === Evolution Chain ===
+        ### → ###
+
+END get_pokemon()
 
 ---
-### Flow Chart
-
+### Flow Chart:
+![alt text](<image/Structure Chart.png>)
 ### Pseudocode
+BEGIN find_pokemon_by_stat
+    
+    CONVERT stat_name to lowercase
+
+    FETCH all Pokemon data from API  
+    IF request fails THEN  
+        DISPLAY "Failed to fetch Pokemon list."  
+        RETURN  
+    ENDIF  
+
+    FOR each Pokemon in data
+        GET stat value for stat_name  
+        IF stat exists THEN  
+            ADD (Pokemon name, stat value) to list  
+        ENDIF  
+    ENDFOR  
+
+    SORT list by stat value (highest or lowest)  
+
+    DISPLAY pokemon_amount Pokemon with their stat values  
+END find_pokemon_by_stat  
+
 ---
 ### Data Dictionary
+# Data Dictionary
+
+| Variable         | Data Type   | Format for Display | Size in Bytes | Size for Display | Description                                         | Example                 | Validation                     |
+|-----------------|------------|--------------------|--------------|----------------|-------------------------------------------------|-------------------------|-------------------------------|
+| pokemon name  | String     | Capitalized       | Varies       | Varies         | The name of the Pokemon                        | Pikachu             | Must be a valid Pokemon name  |
+| id           | Integer    | Numeric           | 4            | 4              | Unique identifier for the Pokemon              | 25                    | Must be a positive integer    |
+| height       | Integer    | Numeric           | 4            | 4              | Height of the Pokemon in decimeters            | 4                      | Must be a positive integer    |
+| weight     | Integer    | Numeric           | 4            | 4              | Weight of the Pokemon in hectograms            | 60                     | Must be a positive integer    |
+| types         | List       | Comma-separated   | Varies       | Varies         | Pokemon type(s)                           | electic           | Must be a valid Pokemon type  |
+| abilities     | List       | Comma-separated   | Varies       | Varies         | List of abilities the Pokemon has              | Static, Lightning Rod | Must be valid Pokemon abilities |
+| stats         | Dictionary | Key-Value Pair    | Varies       | Varies         | Pokemon's base stats                           | HP: 35, Speed: 90 | Keys must be valid stat names |
+| held items    | List       | Comma-separated   | Varies       | Varies         | Items the Pokemon may hold                     | Oran Berry         | Items must be from the game   |
+| moves         | List       | Comma-separated   | Varies       | Varies         | Moves that the Pokemon can learn               | Thunderbolt, Quick Attack | Moves must be from the game |
+| evolution chain | List     | Arrow-separated   | Varies       | Varies         | Evolutionary line of the Pokemon               | Eevee → Jolteon      | Must follow game evolution rules |
+
+---
+## Maintenance Questions
+1. Explain how you would handle issues caused by changes to the poke API over time.
+I could update the poke api url.
+
+2. Explain how you would ensure the program remains compatible with new versions of Python and libraries like requests and matplotlib.
+I could update the code so that the new versions are compatiable with the code.
+
+3. Describe the steps you would take to fix a bug found in the program after deployment.
+A bug found was when I asked the code to get eevees evolutions information. The evolution for it always went Eevee-->Vaporeon so I changed the code from getting the evolution info of the pokemon and printing it out to just getting the evolutions before and then printing the name of the pokemon.
+
+4. Outline how you would maintain clear documentation and ensure the program remains easy to update in the future.
+
+
+## Final Evaluation
+1. Evaluate the current functionality of the program in terms of how well it addresses the functional and non-functional requirements.
+
+
+2. Discuss areas for improvement or new features that could be added.
+
+
+3. Evaluate how the project was managed throughout its development and maintenance, including your time management and how challenges were addressed during the software development lifecycle.
 
