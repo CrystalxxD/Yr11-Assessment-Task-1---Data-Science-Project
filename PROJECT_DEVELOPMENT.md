@@ -221,14 +221,50 @@ I could update the code so that the new versions are compatiable with the code.
 A bug found was when I asked the code to get eevees evolutions information. The evolution for it always went Eevee-->Vaporeon so I changed the code from getting the evolution info of the pokemon and printing it out to just getting the evolutions before and then printing the name of the pokemon.
 
 4. Outline how you would maintain clear documentation and ensure the program remains easy to update in the future.
-
-
+The program would be documented as using commits that allows me to see what changes I did to the code and would allow me the update the code and see what is wrong with the code
+---
 ## Final Evaluation
 1. Evaluate the current functionality of the program in terms of how well it addresses the functional and non-functional requirements.
-
+The program allows the user to find pokemons by stats and also find the pokemons stat as well as saving passed searched pokemons. It follows both functional and non-functional requirements and complements them well.
 
 2. Discuss areas for improvement or new features that could be added.
-
+New features that can be added would be making it into a GUI so that the user doesnt have to type in everything and would make the code nicer
 
 3. Evaluate how the project was managed throughout its development and maintenance, including your time management and how challenges were addressed during the software development lifecycle.
+My project was managed using the gnatt chart I made at the start and allowed me to finish the project smoothly and on time as well as allowing me to check over what I need to change. Challanges that occured was when making the code since the code sometimes didn't work and I had to find out what was wrong until I could continue.
+---
+## Testing and Debugging
+### March 3 at 3:10 PM
+- Created Files and Named them
 
+### March 5 at 10:09 AM
+- Added titles in project development file
+
+### March 10 at 10:09 AM
+- Started to write the requirements
+
+### March 11 at 3:08 PM
+- Finished writing the requirement and the functional and non-functional specification
+
+### March 17 at 8:35 PM
+- Edited the some parts of the requirements and specification as well as adding the Use Case
+
+### March 18 at 9:49 PM
+- Edited the requirements and started on writing the code for the pokemon finder
+
+### March 18 at 10:20 PM
+- Added more code and made the code give some suggestions of pokemon instead of saying pokemon not found. Also added the Gnatt Chart
+
+### March 19 
+- Changed the code so that it gave 10 random moves of the pokemon instead of giving the first 10 moves the pokemon has.
+
+### March 19
+- Added loop to main function
+
+### March 21
+- Changed the url because the other one was not working
+
+### March 25
+- Added Structure chart and made the code to have a better loop and to have multiple options such as saving passed searched pokemon and searching pokemon through the highest or lowest stats.
+
+### 
