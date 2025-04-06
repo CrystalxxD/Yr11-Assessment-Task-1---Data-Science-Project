@@ -267,4 +267,18 @@ My project was managed using the gnatt chart I made at the start and allowed me 
 ### March 25
 - Added Structure chart and made the code to have a better loop and to have multiple options such as saving passed searched pokemon and searching pokemon through the highest or lowest stats.
 
-### 
+### March 29 
+- Changed the searching pokemon through highest or lowest stats so that it can run faster by using asynico and aiohttp. Also changed the evolution chain function as it was printing the wrong pokemon for all the eevee evolutions.
+
+### April 2 
+- Finished Flowcharts and Pseudocode, structure chart and the use cases in project management and finished the readMe file.
+
+### April 4
+- Added the Testing and Debugging part so that the history of creating the code is more clear.
+---
+# Peer Evaluation
+## Stephan:
+
+## Barry:
+
+## IDK:
