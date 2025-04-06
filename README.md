@@ -1,20 +1,17 @@
 # Pokemon Finder
-
-This Python program allows you to retrieve information on pokemon from an external API. The program uses the `requests`, `difflib`, `random`, `json`, `os`, `asyncio`, `aiohttp` which allows the program to run smoothly and faster when calling api as well as storing data and randomly generating moves that the pokemon uses
+This Python program allows you to retrieve information on pokemon from an external API. The program uses the `requests`, `aiohttp` which allows the program to run smoothly and faster when calling api as well as storing data and randomly generating moves that the pokemon uses
 
 ## Features
 - Fetches pokemon info on height, weight, id, moves, held items, special attacks and defence, hp etc.
 - Orders pokemon by their stats
 - Store past searched pokemon
 
-## Requirements
-To run this program, you need to install the following dependencies:
+## URL for poke api
+https://pokeapi.co/api/v2/
 
-- `difflib` 
+## Requirements
+To run this program, you need to install the following dependencies: 
 - `requests` 
-- `json`
-- `os`
-- `asyncio`
 - `aiohttp`
 
 ### Install dependencies

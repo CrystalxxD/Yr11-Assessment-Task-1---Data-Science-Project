@@ -278,7 +278,8 @@ My project was managed using the gnatt chart I made at the start and allowed me 
 ---
 # Peer Evaluation
 ## Stephan:
+Chris has develop an efficient UI which provides the user with information about a specific pokemon. His Code runs perfectly, able to handle errors and provide multiple options. He has spent some time laying out his information in a way that is understandble. Some improvements he could make is creating a GUI, but i think it will meet the needs of end-users
 
-## Barry:
 
-## IDK:
+## Yyoung:
+Chris' program is well developed. I particually like the fact that there was a "Did you mean" section where it outputted pokemon names in case there was an error or a user did not know how to spell a pokemon name. He could have created a simple GUI or added breakes in the program with sleep() to prevent the fact that every thing came out all at once, which might be a bit confusing.

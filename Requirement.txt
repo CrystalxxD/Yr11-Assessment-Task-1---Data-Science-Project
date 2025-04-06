@@ -1,7 +1,0 @@
-requests
-difflib
-random
-json
-os
-asyncio
-aiohttp
