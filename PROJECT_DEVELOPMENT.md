@@ -275,6 +275,9 @@ My project was managed using the gnatt chart I made at the start and allowed me 
 
 ### April 4
 - Added the Testing and Debugging part so that the history of creating the code is more clear.
+
+### April 7 
+- Edited requirement txt as well as readme so that the user can the pip install -r requirements.txt to get all the funtions that is needed to be downloaded. Changed structure chart and added peer evaluation.
 ---
 # Peer Evaluation
 ## Stephan:
