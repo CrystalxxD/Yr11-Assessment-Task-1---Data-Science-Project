@@ -278,6 +278,9 @@ My project was managed using the gnatt chart I made at the start and allowed me 
 
 ### April 7 
 - Edited requirement txt as well as readme so that the user can the pip install -r requirements.txt to get all the funtions that is needed to be downloaded. Changed structure chart and added peer evaluation.
+
+### April 8
+- Added comments to code
 ---
 # Peer Evaluation
 ## Stephan:
