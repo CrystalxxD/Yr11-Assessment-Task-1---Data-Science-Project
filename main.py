@@ -1,16 +1,16 @@
-import requests # For sending HTTP requests 
-import difflib # For finding close matches between strings
-import random # For selecting random items
-import json # For working with JSON data
-import os # For interacting with the file system
-import asyncio # For asynchronous programming
-import aiohttp # For asynchronous HTTP requests
+import requests  # For sending HTTP requests 
+import difflib  # For finding close matches between strings
+import random  # For selecting random items
+import json  # For working with JSON data
+import os  # For interacting with the file system
+import asyncio  # For asynchronous programming
+import aiohttp  # For asynchronous HTTP requests
 
-BASE_URL = "https://pokeapi.co/api/v2/" # URL for Poke API
-SEARCH_HISTORY_FILE = "searched_pokemon.json" #File name for storing pass searched pokemons
+BASE_URL = "https://pokeapi.co/api/v2/"  # URL for Poke API
+SEARCH_HISTORY_FILE = "searched_pokemon.json"  # File name for storing previously searched Pokemon
 
 def fetch_all_pokemon():
-    #Fetches a list of all Pokemon names for error handling.
+    # Fetches a list of all Pokemon names for error handling.
     url = f"{BASE_URL}pokemon?limit=10000"  # Get all Pokemon
     response = requests.get(url)
     
@@ -21,12 +21,12 @@ def fetch_all_pokemon():
 
 def suggest_pokemon_name(user_input, pokemon_list):
     # Suggests the closest Pokemon names if user input is incorrect.
-    matches = difflib.get_close_matches(user_input.lower(), pokemon_list, n=5, cutoff=0.5) # Finds close matches
+    matches = difflib.get_close_matches(user_input.lower(), pokemon_list, n=5, cutoff=0.5)  # Finds close matches
     return matches
 
 def get_pokemon_data(pokemon_name):
     # Fetches data about a specific Pokemon from the PokeAPI
-    url = f"{BASE_URL}pokemon/{pokemon_name.lower()}" # URL for the specific Pokemon
+    url = f"{BASE_URL}pokemon/{pokemon_name.lower()}"  # URL for the specific Pokemon
     response = requests.get(url)
     
     if response.status_code != 200:
@@ -35,29 +35,29 @@ def get_pokemon_data(pokemon_name):
     data = response.json()
     
     # Basic Info
-    name = data["name"].capitalize() # Pokemon name Capitalised
-    id_ = data["id"] # Pokemon ID
-    height = data["height"] # Height of Pokemon
-    weight = data["weight"] # Weight of Pokemon
+    name = data["name"].capitalize()  # Pokemon name Capitalized
+    id_ = data["id"]  # Pokemon ID
+    height = data["height"]  # Height of Pokemon
+    weight = data["weight"]  # Weight of Pokemon
 
     # Types
-    types = [t["type"]["name"].capitalize() for t in data["types"]] # Extracts and capitalizes types
+    types = [t["type"]["name"].capitalize() for t in data["types"]]  # Extracts and capitalizes types
 
     # Abilities
-    abilities = [a["ability"]["name"].capitalize() for a in data["abilities"]] # Extracts and capitalizes abilities
+    abilities = [a["ability"]["name"].capitalize() for a in data["abilities"]]  # Extracts and capitalizes abilities
 
     # Base Stats
-    stats = {s["stat"]["name"].capitalize(): s["base_stat"] for s in data["stats"]} # Extracts and capitalizes stats
+    stats = {s["stat"]["name"].capitalize(): s["base_stat"] for s in data["stats"]}  # Extracts and capitalizes stats
 
     # Held Items
-    held_items = [item["item"]["name"].capitalize() for item in data["held_items"]] # Extracts and capitalizes held items
+    held_items = [item["item"]["name"].capitalize() for item in data["held_items"]]  # Extracts and capitalizes held items
 
     # Moves (Randomly pick 10)
     all_moves = [m["move"]["name"].capitalize() for m in data["moves"]]
     moves = random.sample(all_moves, min(10, len(all_moves)))  # Pick up to 10 moves
 
     # Evolution Chain
-    evolution_chain = get_evolution_chain(data["species"]["url"], pokemon_name.lower()) # Extracts and capitalizes the whole evolution chain
+    evolution_chain = get_evolution_chain(data["species"]["url"], pokemon_name.lower())  # Extracts and capitalizes the whole evolution chain
 
     # Display Results
     print("\n=== Pokemon Information ===")
@@ -84,31 +84,33 @@ def get_pokemon_data(pokemon_name):
     return True 
 
 def get_evolution_chain(species_url, target_pokemon):  
+    # Fetches evolution data and formats it
     response = requests.get(species_url)
     if response.status_code != 200:
         return []
 
-    species_data = response.json() # Converts the response to JSON
-    evolution_url = species_data["evolution_chain"]["url"] # Extracts the evolution chain URL
+    species_data = response.json()  # Converts the response to JSON
+    evolution_url = species_data["evolution_chain"]["url"]  # Extracts the evolution chain URL
     
-    response = requests.get(evolution_url) # Sends an HTTP GET request for the evolution chain
+    response = requests.get(evolution_url)  # Sends an HTTP GET request for the evolution chain
     if response.status_code != 200:
         return []
 
     evolution_data = response.json()
-    return format_evolution_chain(evolution_data["chain"], target_pokemon) # Formats the evolution chain
+    return format_evolution_chain(evolution_data["chain"], target_pokemon)  # Formats the evolution chain
 
-def format_evolution_chain(chain, target_pokemon): # Formats the evolution chain into a readable format.
+def format_evolution_chain(chain, target_pokemon): 
+    # Formats the evolution chain into a readable format.
     path = []
     
     def traverse(chain, current_path):
-        current_name = chain["species"]["name"].lower() # Extracts the species name
-        new_path = current_path + [current_name.capitalize()] # Adds the current name to the path
+        current_name = chain["species"]["name"].lower()  # Extracts the species name
+        new_path = current_path + [current_name.capitalize()]  # Adds the current name to the path
         
-        if current_name == target_pokemon.lower(): # Checks if the target Pokemon is found
+        if current_name == target_pokemon.lower():  # Checks if the target Pokemon is found
             return new_path
         
-        for evolution in chain["evolves_to"]: # Goes through all possible evolutions for specified pokemon
+        for evolution in chain["evolves_to"]:  # Goes through all possible evolutions for specified pokemon
             result = traverse(evolution, new_path)
             if result:
                 return result
@@ -116,33 +118,31 @@ def format_evolution_chain(chain, target_pokemon): # Formats the evolution chain
         return None
     
     final_path = traverse(chain, [])
-    return final_path if final_path else [target_pokemon.capitalize()] # Returns the final path or the target name
+    return final_path if final_path else [target_pokemon.capitalize()]  # Returns the final path or the target name
 
-# Function to load Pokemon search history
 def load_search_history(): 
-    if os.path.exists(SEARCH_HISTORY_FILE): # Checks if the file exists
-        with open(SEARCH_HISTORY_FILE, "r") as file: # opens file in read mode
+    # Function to load previously searched Pokemon names
+    if os.path.exists(SEARCH_HISTORY_FILE):  # Checks if the file exists
+        with open(SEARCH_HISTORY_FILE, "r") as file:  # Opens file in read mode
             return json.load(file)
     return []
 
-# Function to save searched Pokemon names
 def save_search_history(pokemon_name): 
-    history = load_search_history() # Loads the current history
-    if pokemon_name.lower() not in history: # Checks if the name is not already in history
-        history.append(pokemon_name.lower()) # Appends the name to the history
-        with open(SEARCH_HISTORY_FILE, "w") as file: # Opens the file in write mode
+    # Function to save searched Pokemon names
+    history = load_search_history()  # Loads the current history
+    if pokemon_name.lower() not in history:  # Checks if the name is not already in history
+        history.append(pokemon_name.lower())  # Appends the name to the history
+        with open(SEARCH_HISTORY_FILE, "w") as file:  # Opens the file in write mode
             json.dump(history, file, indent=4)
 
 def clear_search_history():
-    #Deletes all Pokemon search history from the JSON file. 
+    # Function to clear all Pokemon search history from the JSON file. 
     if os.path.exists(SEARCH_HISTORY_FILE):
-        os.remove(SEARCH_HISTORY_FILE) # removes the search_pokemon file
+        os.remove(SEARCH_HISTORY_FILE)  # Removes the search history file
         print("\nSearch history has been cleared successfully.")
     else:
         print("\nNo search history file found. Nothing to delete.")
 
-# Function to find Pokemon with the highest or lowest stats 
-#async for it to call Pokemon Faster
 async def fetch_pokemon_data(session, url):
     # Fetches Pokemon data asynchronously.
     async with session.get(url) as response:  # Sends an asynchronous HTTP GET request
@@ -150,13 +150,14 @@ async def fetch_pokemon_data(session, url):
             return await response.json()
     return None
 
-async def find_pokemon_by_stat(stat_name, pokemon_amount, highest=True): # Finds Pokemon with the highest or lowest value for a specific stat.
-    stat_name = stat_name.lower() # changes stat_name to be lower case
+async def find_pokemon_by_stat(stat_name, pokemon_amount, highest=True):
+    # Finds Pokemon with the highest or lowest value for a specific stat.
+    stat_name = stat_name.lower()  # Changes stat_name to be lowercase
     
     url = f"{BASE_URL}pokemon?limit=10000"
     
-    async with aiohttp.ClientSession() as session: # Creates an asynchronous HTTP session
-        response = await fetch_pokemon_data(session, url) # Fetches the list of all Pokemon
+    async with aiohttp.ClientSession() as session:  # Creates an asynchronous HTTP session
+        response = await fetch_pokemon_data(session, url)  # Fetches the list of all Pokemon
         
         if not response:
             print("Failed to fetch Pokemon list.") 
@@ -167,25 +168,23 @@ async def find_pokemon_by_stat(stat_name, pokemon_amount, highest=True): # Finds
 
         print(f"\nFetching data for {len(all_pokemon)} Pokemon... This might take a while.")
 
-        tasks = [fetch_pokemon_data(session, pokemon["url"]) for pokemon in all_pokemon] # Creates tasks for fetching Pokemon data
+        tasks = [fetch_pokemon_data(session, pokemon["url"]) for pokemon in all_pokemon]  # Creates tasks for fetching Pokemon data
         results = await asyncio.gather(*tasks)
 
         for data in results:
             if data:
-                stats = {s["stat"]["name"].lower(): s["base_stat"] for s in data["stats"]}
+                stats = {s["stat"]["name"].lower(): s["base_stat"] for s in data["stats"]}  # Create a dictionary of the Pokemon's stats
                 if stat_name in stats:
-                    stat_list.append((data["name"].capitalize(), stats[stat_name]))
+                    stat_list.append((data["name"].capitalize(), stats[stat_name]))  # Capitalizes the name for display and gets the base_stat value
 
-        stat_list = sorted(stat_list, key=lambda x: x[1], reverse=highest)
+        stat_list = sorted(stat_list, key=lambda x: x[1], reverse=highest)  # Sort the list of Pokemon based on the specified stat and checks if the user wanted it by highest or by lowest.
 
-        print(f"\nTop {pokemon_amount} Pokemon for {stat_name.capitalize()} ({'Highest' if highest else 'Lowest'}):")
-        for i, (name, value) in enumerate(stat_list[:pokemon_amount], 1):
-            print(f"{i}. {name} - {value} {stat_name.capitalize()}")
+        print(f"\nTop {pokemon_amount} Pokemon for {stat_name.capitalize()} ({'Highest' if highest else 'Lowest'}):")  # Displays the top Pokemon based on the selected stat
+        for i, (name, value) in enumerate(stat_list[:pokemon_amount], 1):  # Loops through the sorted list and prints the Pokemon name and their stat value
+            print(f"{i}. {name} - {value} {stat_name.capitalize()}")  
 
-# Load Pokemon names once
-pokemon_list = fetch_all_pokemon()
+pokemon_list = fetch_all_pokemon()  # Load Pokemon names once
 
-#loop
 def main():
     while True:
         print("\nWhat would you like to do?")
@@ -198,35 +197,49 @@ def main():
         choice = input("Enter your choice (1/2/3/4/5): ").strip()
 
         if choice == "1":
-            pokemon_name = input("\nEnter Pokemon name: ").strip()
+            while True:  # Loop until valid input is received
+                pokemon_name = input("\nEnter Pokemon name: ").strip()
             
-            if pokemon_name.lower() in pokemon_list:
-                get_pokemon_data(pokemon_name)
-                save_search_history(pokemon_name)
-            else:
-                suggestions = suggest_pokemon_name(pokemon_name, pokemon_list)
-                if suggestions:
-                    print(f"\nPokemon not found! Did you mean: {', '.join(suggestions)}?")
+                if pokemon_name.lower() in pokemon_list:
+                    get_pokemon_data(pokemon_name)
+                    save_search_history(pokemon_name)
+                    break  # Exit loop if valid Pokemon name is entered
                 else:
-                    print("\nPokemon not found, and no similar names were found.")
-
+                    suggestions = suggest_pokemon_name(pokemon_name, pokemon_list)
+                    if suggestions:
+                        print(f"\nPokemon not found! Did you mean: {', '.join(suggestions)}?")
+                    else:
+                        print("\nPokemon not found, and no similar names were found.")
+        
         elif choice == "2":
             valid_stats = ["hp", "attack", "defense", "special-attack", "special-defense", "speed"]
             print("\nAvailable stats to search for:")
             print(", ".join(valid_stats))
 
-            stat_name = input("Enter a stat: ").strip().lower()  # Convert to lowercase
-            if stat_name not in valid_stats:
-                print("\nInvalid stat! Please enter one from the list.")
-                continue
+            while True:  # Loop until valid stat input is received
+                stat_name = input("Enter a stat: ").strip().lower()  # Convert to lowercase
+                if stat_name not in valid_stats:
+                    print("\nInvalid stat! Please enter one from the list.")
+                    continue  # Keep asking if invalid stat
+                break  # Exit loop if valid stat is entered
 
-            pokemon_amount = input("Enter how many top Pokemon to display: ").strip()
-            if not pokemon_amount.isdigit() or int(pokemon_amount) <= 0:
-                print("\nInvalid number! Please enter a positive integer.")
-                continue
+            while True:  # Loop until valid number input is received
+                pokemon_amount = input("Enter how many top Pokemon to display: ").strip()
+                if not pokemon_amount.isdigit() or int(pokemon_amount) <= 0:
+                    print("\nInvalid number! Please enter a positive integer.")
+                    continue  # Keep asking if invalid number
+                break  # Exit loop if valid number is entered
 
-            order = input("Find highest or lowest? (h/l): ").strip().lower()
-            highest = order == "h"
+            while True:  # Loop until valid input for highest/lowest is received
+                order = input("Find highest or lowest? (h/l): ").strip().lower()
+                if order == "h":
+                    highest = True
+                    break
+                elif order == "l":
+                    highest = False
+                    break
+                else:
+                    print("\nInvalid input! Please enter 'h' for highest or 'l' for lowest.")
 
             asyncio.run(find_pokemon_by_stat(stat_name, int(pokemon_amount), highest))  # Run async function properly
 
