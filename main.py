@@ -224,14 +224,14 @@ def main():
                 break  # Exit loop if valid stat is entered
 
             while True:  # Loop until valid number input is received
-                pokemon_amount = input("Enter how many top Pokemon to display: ").strip()
+                pokemon_amount = input("Enter how many top Pokemon to display (maximum amount of pokemon is 1302): ").strip()
                 if not pokemon_amount.isdigit() or int(pokemon_amount) <= 0:
                     print("\nInvalid number! Please enter a positive integer.")
                     continue  # Keep asking if invalid number
                 break  # Exit loop if valid number is entered
 
             while True:  # Loop until valid input for highest/lowest is received
-                order = input("Find highest or lowest? (h/l): ").strip().lower()
+                order = input("Find pokemon in the order from the highest or lowest? (h/l): ").strip().lower()
                 if order == "h":
                     highest = True
                     break

@@ -81,6 +81,7 @@ Main Flow:
 3. **Search Pokemon By Stat**: User chooses what stat they and to see, how many pokemon and from highest or from lowest stat, system collects and shows data
 4. **View Search History**: User gets all pokemon they have searched before.
 5. **Delete Search History**: System Deletes file if user chooses to.
+6. **Exit**: User leaves the program
 
 Postconditions: Retrieval of pokemon data, pokemon, history and the removal of history is succcessful.
 
@@ -281,6 +282,9 @@ My project was managed using the gnatt chart I made at the start and allowed me 
 
 ### April 8
 - Added comments to code
+
+### April 9
+- Edited the wording of some of the prints to make it easier to understand what the function of the user input does. Also added a little bit more info into Use cases and ReadMe file.
 ---
 # Peer Evaluation
 ## Stephan:
