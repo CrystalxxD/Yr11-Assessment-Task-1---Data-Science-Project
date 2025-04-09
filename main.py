@@ -145,7 +145,7 @@ def clear_search_history():
 
 async def fetch_pokemon_data(session, url):
     # Fetches Pokemon data asynchronously.
-    async with session.get(url) as response:  # Sends an asynchronous HTTP GET request
+    async with session.get(url) as response:  # Sends an asynchronous get HTTP request
         if response.status == 200:
             return await response.json()
     return None
